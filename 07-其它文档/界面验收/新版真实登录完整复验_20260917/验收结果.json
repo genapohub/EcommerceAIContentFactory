@@ -1,0 +1,236 @@
+{
+  "startedAt": "2026-09-17T08:15:00.463Z",
+  "result": "新版真实授权后的UI检查通过",
+  "mode": "隔离真实登录",
+  "browser": "chrome",
+  "widths": [
+    320,
+    375,
+    600,
+    760,
+    900,
+    1100,
+    1440,
+    1920
+  ],
+  "authorized": true,
+  "checks": [
+    {
+      "label": "授权页 320",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 320",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 320",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 320",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "授权页 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "授权页 600",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 600",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 600",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 600",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "授权页 760",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 760",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 760",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 760",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "授权页 900",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 900",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 900",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 900",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "授权页 1100",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 1100",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 1100",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 1100",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "授权页 1440",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 1440",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 1440",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 1440",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "授权页 1920",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 1920",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 1920",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 1920",
+      "passed": true,
+      "issues": []
+    }
+  ],
+  "screenshots": [
+    "授权页_登录前_1440.png",
+    "授权页_真实已登录_320.png",
+    "模型页_320.png",
+    "模型弹窗_320.png",
+    "生产页_320.png",
+    "授权页_真实已登录_375.png",
+    "模型页_375.png",
+    "模型弹窗_375.png",
+    "生产页_375.png",
+    "授权页_真实已登录_600.png",
+    "模型页_600.png",
+    "模型弹窗_600.png",
+    "生产页_600.png",
+    "授权页_真实已登录_760.png",
+    "模型页_760.png",
+    "模型弹窗_760.png",
+    "生产页_760.png",
+    "授权页_真实已登录_900.png",
+    "模型页_900.png",
+    "模型弹窗_900.png",
+    "生产页_900.png",
+    "授权页_真实已登录_1100.png",
+    "模型页_1100.png",
+    "模型弹窗_1100.png",
+    "生产页_1100.png",
+    "授权页_真实已登录_1440.png",
+    "模型页_1440.png",
+    "模型弹窗_1440.png",
+    "生产页_1440.png",
+    "授权页_真实已登录_1920.png",
+    "模型页_1920.png",
+    "模型弹窗_1920.png",
+    "生产页_1920.png"
+  ],
+  "pageErrors": [],
+  "httpErrors": [],
+  "source": "C:\\Users\\OPC\\Downloads\\WorkSpace\\电商AI内容工厂\\06-项目编码\\EcommerceAIContentFactory",
+  "sourceHashes": {
+    "前端/工作台.html": "fe43d8944e6a0f9d6d5cabbdef13907586c3e8f692c082470a35d7a6c26ec11d",
+    "前端/应用.js": "874d98031f9732c4cdfa19b37ff4ed962ac2fe9d989f39f334e3c9625b3418d9",
+    "前端/账号授权.js": "65ec5680d365ff2cdabc6df221c90a7d38ede655c0ef0ed79457a5dc30da66d3",
+    "前端/样式.css": "59f293eddf552034a9ebaa9da66848475973637b9b36db370f4dcb249a630232",
+    "前端/令牌.css": "97d45542356f1ac424e6d6bd901fb8e71af89c2847cb15d1677e26197d98708c",
+    "前端/模型管理.css": "37e4e7bb091ad89c057344c31d8cee10d36935e44cdc820cd3869f945f70700b",
+    "前端/精致工作台.css": "9d9f516e87ffa92355cd2ec5dbb825533e024e2069a836d17aa76c4b09362392",
+    "服务端/账号授权.mjs": "14285e65bc3ab34f7069557bd617a5092654562be366d0e5e746830e56cbac21",
+    "授权服务/应用.mjs": "596b0a4b77fd2b64e31888af90ba4e90162e01fd6bd3599c3e737e11f7d6ea6e"
+  },
+  "isolatedDataDirectory": "C:\\Users\\OPC\\AppData\\Local\\Temp\\电商UI授权验收-gMYPSt",
+  "url": "http://127.0.0.1:63646",
+  "initialState": {
+    "authorized": false,
+    "configured": true,
+    "legacy": false
+  },
+  "finishedAt": "2026-09-17T08:15:08.234Z"
+}

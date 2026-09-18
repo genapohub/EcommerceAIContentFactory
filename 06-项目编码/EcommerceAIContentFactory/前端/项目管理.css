@@ -1,0 +1,15 @@
+.project-entry{display:flex;align-items:center;gap:2px;margin-bottom:4px;border-radius:4px;min-width:0}
+.project-entry.active{background:var(--bg)}
+.project-entry .project-item{flex:1;min-width:0;width:auto;margin:0;padding:8px 6px}
+.project-entry>.icon{width:26px;height:28px;min-height:28px;padding:5px;border-color:transparent;background:transparent;color:var(--muted)}
+.project-entry>.icon:hover{color:var(--text);background:var(--line)}
+.project-entry>.icon:last-child:hover{color:var(--danger);background:var(--danger-soft)}
+.project-entry>.icon svg{width:14px;height:14px}
+.project-list-empty{display:block;padding:10px 6px}
+#project-manager-dialog{width:min(440px,calc(100% - 24px))}
+#project-manager-dialog .dialog-footer{gap:8px}
+#project-manager-dialog .danger{background:var(--danger);border-color:var(--danger)}
+#project-delete-copy{overflow-wrap:anywhere;line-height:1.8}
+#project-manager-error{margin-top:14px}
+#project-empty-state{margin:0 24px 24px;min-height:300px}
+@media(max-width:760px){#project-empty-state{margin:0 12px 16px}.compact-projects select{min-width:0;flex:1}}

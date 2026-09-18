@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>电商AI内容工厂</title><link rel="stylesheet" href="/static/样式.css"><script src="/vendor/lucide/lucide.js" defer></script><script type="module" src="/static/应用.js"></script></head>
+<body>
+<aside class="sidebar">
+  <a class="brand" href="/"><span class="brand-mark"><i data-lucide="layers-2"></i></span><span>电商AI<br>内容工厂</span></a>
+  <nav aria-label="主导航"><button data-view="production" class="nav active" aria-label="内容生产" title="内容生产"><i data-lucide="layout-dashboard"></i><span>内容生产</span></button><button data-view="history" class="nav" aria-label="生成任务" title="生成任务"><i data-lucide="list-checks"></i><span>生成任务</span><b id="active-count">0</b></button><button data-view="config" class="nav" aria-label="国内模型" title="国内模型"><i data-lucide="sliders-horizontal"></i><span>国内模型</span></button></nav>
+  <button id="license-nav" data-view="license" class="nav" aria-label="账号与设备" title="账号与设备"><i data-lucide="shield-check"></i><span>账号与设备</span></button>
+  <div class="project-heading"><span>商品项目</span><button id="new-project" class="icon" title="新建商品项目" aria-label="新建商品项目"><i data-lucide="plus"></i></button></div><div id="project-list" class="project-list"></div>
+  <div class="sidebar-foot"><span class="dot"></span><span id="service-status">连接中</span><small>本机工作台 · MVP 2.0</small></div>
+</aside>
+<main>
+  <header class="topbar"><div><div class="eyebrow">电商AI内容工厂 <span>/</span> <span id="page-label">内容生产</span></div><h1 id="page-title">商品内容生成</h1></div><div class="row"><span id="save-status" class="muted">已保存</span><button id="save-project"><i data-lucide="save"></i>保存</button></div></header>
+  <div id="connection-alert" class="notice error">工作台正在连接本机服务。请通过启动脚本打开，勿直接打开HTML文件。</div>
+  <div class="compact-projects"><select id="project-switch" aria-label="选择商品项目"></select><button class="icon" data-action="new-project" title="新建商品项目" aria-label="新建商品项目"><i data-lucide="plus"></i></button></div>
+  <section id="production-view">
+    <div class="mode-bar"><div class="segmented"><button class="active" data-mode="product"><i data-lucide="package"></i>商品内容</button><button data-mode="replica"><i data-lucide="clapperboard"></i>参考视频复刻</button></div><span id="output-summary" class="muted"></span></div>
+    <div class="workspace">
+      <section class="inputs">
+        <div class="section-heading"><h2>商品素材</h2><span class="tag">原始照片</span></div>
+        <label class="upload" id="image-drop"><input type="file" id="product-image" accept="image/jpeg,image/png,image/webp" capture="environment"><div id="product-preview"><i data-lucide="camera"></i><strong>拍摄 / 上传商品照片</strong><span>JPG、PNG、WebP</span></div></label>
+        <div class="row split"><button class="subtle" id="analyze-product"><i data-lucide="scan-eye"></i>提炼卖点</button><button class="icon" id="remove-image" title="移除当前商品照片" aria-label="移除当前商品照片"><i data-lucide="trash-2"></i></button></div>
+        <form id="product-form">
+          <label>商品名称 <span>选填</span><input name="name" maxlength="100" placeholder="给商品起个名字"></label>
+          <div class="two"><label>类目 <span>选填</span><select name="category"><option value="">未指定</option><option>服饰</option><option>美妆</option><option>食品</option><option>家居</option><option>3C</option><option>其他</option></select></label><label>价格 <span>选填</span><input name="price" maxlength="100" placeholder="例如 ¥129"></label></div>
+          <label>已确认的卖点 <span>选填</span><textarea name="claims" rows="2" maxlength="2000" placeholder="材质、功能、差异点"></textarea></label>
+          <label>画面要求 <span>选填</span><textarea name="brief" rows="2" maxlength="1500" placeholder="背景、场景、风格"></textarea></label>
+          <details><summary>补充资料</summary><label>目标人群<input name="audience" maxlength="400"></label><label>规格参数<textarea name="specs" rows="2" maxlength="2000"></textarea></label></details>
+          <section id="reference-input" hidden><div class="section-heading"><h2>参考视频</h2><span class="tag blue">Vidu</span></div><label>视频链接<input name="referenceUrl" type="url" maxlength="2000" placeholder="https://…"></label><div class="row"><button type="button" id="import-link"><i data-lucide="link"></i>读取链接</button><label class="button"><i data-lucide="upload"></i>上传文件<input type="file" id="reference-video" accept="video/mp4,video/quicktime" hidden></label></div><div id="reference-preview"></div><button type="button" id="analyze-reference" class="subtle"><i data-lucide="scan-line"></i>分析视频结构</button><label>补充参考文案 <span>选填</span><textarea name="referenceText" rows="2" maxlength="3000"></textarea></label></section>
+        </form>
+      </section>
+      <section class="outputs">
+        <div id="configuration-notice" class="notice" hidden></div>
+        <div class="output-heading"><h2>内容生产</h2><div class="row"><button id="export-markdown" class="icon" title="导出文案 Markdown" aria-label="导出文案"><i data-lucide="file-text"></i></button><button id="export-csv" class="icon" title="导出脚本 CSV" aria-label="导出脚本"><i data-lucide="table-2"></i></button><button id="export-all"><i data-lucide="download"></i>全部导出</button></div></div>
+        <div class="tabs" role="tablist" aria-label="内容类型"><button data-output="main" class="active" role="tab">商品主图 <b id="main-count">0</b></button><button data-output="details" role="tab">分屏详情 <b id="detail-count">0</b></button><button data-output="videos" role="tab">商品视频 <b id="video-count">0</b></button><button data-output="plan" role="tab">卖点与脚本</button></div>
+        <div id="output-toolbar" class="toolbar"></div><div id="result-area"></div><div id="recent-job"></div>
+        <footer class="generation-bar"><div id="generation-options" class="row wrap"><label><input type="checkbox" name="target" value="main_image" checked>商品主图</label><label><input type="checkbox" name="target" value="detail_image" checked>6屏详情</label><label><input type="checkbox" name="target" value="intro_video">介绍视频</label></div><div class="row split"><span id="generation-hint" class="muted">万相 · 商品原图生成</span><button class="primary" id="generate"><i data-lucide="sparkles"></i>生成所选内容</button></div></footer>
+      </section>
+    </div>
+  </section>
+  <section id="license-view" class="page-section" hidden></section>
+  <section id="history-view" class="page-section" hidden><div class="section-heading"><h2>生成记录</h2><button id="refresh-jobs"><i data-lucide="refresh-cw"></i>刷新</button></div><div id="jobs-list"></div></section>
+  <section id="config-view" class="page-section" hidden>
+    <div id="model-manager" hidden></div>
+    <form id="config-form" class="configuration">
+      <section><div class="section-heading"><h2>阿里云百炼</h2><span class="tag" id="wan-status">未配置</span></div><p class="muted">万相图片 / 视频 · 通义视觉分析</p><label>API Key<input type="password" name="wanKey" autocomplete="off" placeholder="输入后仅保留在本次服务进程中"></label><div class="two"><label>业务空间 ID <span>选填</span><input name="workspaceId" maxlength="80"></label><label>视觉分析模型<select name="visionModel"><option value="qwen3-vl-plus">Qwen3 VL Plus</option><option value="qwen3-vl-flash">Qwen3 VL Flash</option></select></label></div><div class="row"><button type="button" data-check="wan"><i data-lucide="plug"></i>检查连接</button><button type="button" data-clear="wan" class="subtle">清除密钥</button></div></section>
+      <section><div class="section-heading"><h2>Vidu</h2><span class="tag blue" id="vidu-status">未配置</span></div><p class="muted">参考视频 + 商品图片 → 视频复刻</p><label>API Key<input type="password" name="viduKey" autocomplete="off" placeholder="输入企业开放平台密钥"></label><label>参考时长预估费率（元/秒）<input type="number" name="viduSecondYuan" min="0.01" max="20" step="0.01"></label><label class="check"><input type="checkbox" name="viduBillingConfirmed">已核对账号计费口径与适用费率</label><div class="row"><button type="button" data-check="vidu"><i data-lucide="plug"></i>检查配置</button><button type="button" data-clear="vidu" class="subtle">清除密钥</button></div></section>
+      <section><h2>生成预算</h2><label>单批预估上限（元）<input type="number" name="maxTaskYuan" min="1" max="1000" step="1"></label><p class="muted">生成前确认预估费用；实际费用以供应商账单为准。服务重启后需重新输入密钥。</p></section><div id="config-result" class="notice" hidden></div><button class="primary" type="submit"><i data-lucide="save"></i>保存模型配置</button>
+    </form>
+  </section>
+</main>
+<dialog id="task-dialog"><div class="dialog-heading"><h2>确认生成任务</h2><button class="icon" id="cancel-generate" aria-label="关闭"><i data-lucide="x"></i></button></div><div id="quote-content"></div><div class="dialog-footer"><button class="primary" id="confirm-generate">确认并提交</button></div></dialog>
+<dialog id="editor-dialog"><form id="editor-form"><div class="dialog-heading"><h2 id="editor-title">编辑内容</h2><button type="button" class="icon" id="close-editor" aria-label="关闭"><i data-lucide="x"></i></button></div><div id="editor-content"></div><div class="dialog-footer"><button type="submit" class="primary"><i data-lucide="save"></i>保存修改</button></div></form></dialog>
+<div id="toast" role="status" hidden></div>
+</body></html>

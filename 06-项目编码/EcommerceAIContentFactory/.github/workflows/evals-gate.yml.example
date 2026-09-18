@@ -1,0 +1,33 @@
+# evals-gate.yml — ai-harness-kit PR / push 质量门禁
+# 用法：放进目标仓库 .github/workflows/，PR 或 push 到 main 时自动跑 evals runner。
+# 观察期：continue-on-error: true 表示「非阻断」，只收集基线、不挡合并。
+# 基线稳定后，删除下方 steps 里 `continue-on-error: true` 这一行，门禁即变硬。
+
+name: evals-gate
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # --since HEAD~1 需要上一笔提交历史
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run harness evals (baseline, non-blocking)
+        run: python3 evals/runner.py . --since HEAD~1
+        continue-on-error: true   # 观察期：先收集基线；稳定后删除此行变硬门禁

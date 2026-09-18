@@ -1,0 +1,9 @@
+{
+  "colors": {"background":"#f5f6f7","surface":"#ffffff","text":"#202827","muted":"#697570","border":"#e1e6e3","accent":"#147b58","accentSoft":"#e9f5ef","warning":"#a86a12","danger":"#ba3737","reference":"#316eaa"},
+  "font": {"body":"Inter, Microsoft YaHei, sans-serif","sizes":[12,14,16,18,20,24],"letterSpacing":0},
+  "radius": {"small":4,"medium":8},
+  "spacing": [4,8,12,16,20,24,32],
+  "layout": {"sidebar":196,"inputColumn":320,"mobileBreakpoint":760},
+  "icons": "lucide 1.46.0",
+  "motion": {"duration":150,"reducedMotion":true}
+}

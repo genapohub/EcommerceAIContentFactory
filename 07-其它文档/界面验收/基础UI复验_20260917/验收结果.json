@@ -1,0 +1,75 @@
+{
+  "startedAt": "2026-09-17T08:12:51.753Z",
+  "result": "基础UI检查通过；新版登录后验收未执行",
+  "mode": "现有本机服务",
+  "browser": "chrome",
+  "widths": [
+    375,
+    1440
+  ],
+  "authorized": false,
+  "checks": [
+    {
+      "label": "授权页 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "授权页 1440",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 1440",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 1440",
+      "passed": true,
+      "issues": []
+    }
+  ],
+  "screenshots": [
+    "授权页_登录前_1440.png",
+    "授权页_旧服务_375.png",
+    "模型页_375.png",
+    "模型弹窗_375.png",
+    "授权页_旧服务_1440.png",
+    "模型页_1440.png",
+    "模型弹窗_1440.png"
+  ],
+  "pageErrors": [],
+  "httpErrors": [
+    {
+      "path": "/api/v1/license",
+      "status": 404
+    },
+    {
+      "path": "/api/v1/license",
+      "status": 404
+    },
+    {
+      "path": "/api/v1/license",
+      "status": 404
+    }
+  ],
+  "source": "C:\\Users\\OPC\\Downloads\\WorkSpace\\电商AI内容工厂\\06-项目编码\\EcommerceAIContentFactory",
+  "url": "http://127.0.0.1:5188/工作台.html",
+  "initialState": {
+    "legacy": true,
+    "authorized": false,
+    "configured": false
+  },
+  "finishedAt": "2026-09-17T08:12:55.463Z"
+}

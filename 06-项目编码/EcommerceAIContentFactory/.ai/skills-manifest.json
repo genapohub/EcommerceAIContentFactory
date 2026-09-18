@@ -1,0 +1,90 @@
+{
+  "owner": "genapohub",
+  "default_protocol": "https",
+  "skills": [
+    {
+      "name": "backend-dev-guide",
+      "path": "skills/backend-dev-guide",
+      "repo_ssh": "git@github.com:genapohub/backend-dev-guide.git",
+      "repo_https": "https://github.com/genapohub/backend-dev-guide.git"
+    },
+    {
+      "name": "data-analyst-guide",
+      "path": "skills/data-analyst-guide",
+      "repo_ssh": "git@github.com:genapohub/data-analyst-guide.git",
+      "repo_https": "https://github.com/genapohub/data-analyst-guide.git"
+    },
+    {
+      "name": "devops-guide",
+      "path": "skills/devops-guide",
+      "repo_ssh": "git@github.com:genapohub/devops-guide.git",
+      "repo_https": "https://github.com/genapohub/devops-guide.git"
+    },
+    {
+      "name": "frontend-dev-guide",
+      "path": "skills/frontend-dev-guide",
+      "repo_ssh": "git@github.com:genapohub/frontend-dev-guide.git",
+      "repo_https": "https://github.com/genapohub/frontend-dev-guide.git"
+    },
+    {
+      "name": "graphic-design-guide",
+      "path": "skills/graphic-design-guide",
+      "repo_ssh": "git@github.com:genapohub/graphic-design-guide.git",
+      "repo_https": "https://github.com/genapohub/graphic-design-guide.git"
+    },
+    {
+      "name": "growth-guide",
+      "path": "skills/growth-guide",
+      "repo_ssh": "git@github.com:genapohub/growth-guide.git",
+      "repo_https": "https://github.com/genapohub/growth-guide.git"
+    },
+    {
+      "name": "monetization-guide",
+      "path": "skills/monetization-guide",
+      "repo_ssh": "git@github.com:genapohub/monetization-guide.git",
+      "repo_https": "https://github.com/genapohub/monetization-guide.git"
+    },
+    {
+      "name": "operations-guide",
+      "path": "skills/operations-guide",
+      "repo_ssh": "git@github.com:genapohub/operations-guide.git",
+      "repo_https": "https://github.com/genapohub/operations-guide.git"
+    },
+    {
+      "name": "product-plan-guide",
+      "path": "skills/product-plan-guide",
+      "repo_ssh": "git@github.com:genapohub/product-plan-guide.git",
+      "repo_https": "https://github.com/genapohub/product-plan-guide.git"
+    },
+    {
+      "name": "project-mgmt-guide",
+      "path": "skills/project-mgmt-guide",
+      "repo_ssh": "git@github.com:genapohub/project-mgmt-guide.git",
+      "repo_https": "https://github.com/genapohub/project-mgmt-guide.git"
+    },
+    {
+      "name": "qa-testing-guide",
+      "path": "skills/qa-testing-guide",
+      "repo_ssh": "git@github.com:genapohub/qa-testing-guide.git",
+      "repo_https": "https://github.com/genapohub/qa-testing-guide.git"
+    },
+    {
+      "name": "team-orchestrator",
+      "path": "skills/team-orchestrator",
+      "repo_ssh": "git@github.com:genapohub/team-orchestrator.git",
+      "repo_https": "https://github.com/genapohub/team-orchestrator.git"
+    },
+    {
+      "name": "tech-lead-guide",
+      "path": "skills/tech-lead-guide",
+      "repo_ssh": "git@github.com:genapohub/tech-lead-guide.git",
+      "repo_https": "https://github.com/genapohub/tech-lead-guide.git"
+    },
+    {
+      "name": "ui-designer-guide",
+      "path": "skills/ui-designer-guide",
+      "repo_ssh": "git@github.com:genapohub/ui-designer-guide.git",
+      "repo_https": "https://github.com/genapohub/ui-designer-guide.git"
+    }
+  ]
+}

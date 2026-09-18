@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>电商 AI 内容工厂</title>
+    <link rel="stylesheet" href="./样式.css">
+    <script defer src="https://unpkg.com/lucide@latest"></script>
+    <script defer src="./生成引擎.js"></script>
+    <script defer src="./应用.js"></script>
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">抖音 / 视频号中小商家 MVP · 科技内容控制台</p>
+          <h1>电商AI内容工厂</h1>
+          <p class="subtitle">
+            输入商品资料和爆款参考，自动沉淀商品卖点库，联动生成详情页模块、短视频脚本、镜头清单和发布前检查，并自动留存每次生成记录。
+          </p>
+          <div class="hero-metrics" aria-label="核心指标">
+            <span>1 套商详页</span>
+            <span>3 条短视频脚本</span>
+            <span>1 份发布检查</span>
+          </div>
+        </div>
+        <aside class="north-star">
+          <span>北极星指标</span>
+          <strong>10 分钟 / SKU</strong>
+          <span>产出 1 套商详页 + 3 条短视频方案</span>
+        </aside>
+      </header>
+
+      <div class="layout">
+        <aside class="panel">
+          <form id="product-form">
+            <section class="form-section">
+              <h2>商品资料</h2>
+              <label class="field">
+                <span>商品名称</span>
+                <input name="name" placeholder="例如：通勤轻量保温杯">
+              </label>
+              <div class="two-cols">
+                <label class="field">
+                  <span>商品类目</span>
+                  <select name="category">
+                    <option value="clothing">服饰</option>
+                    <option value="beauty">美妆个护</option>
+                    <option value="food">食品</option>
+                    <option value="home" selected>家居日用</option>
+                    <option value="tech">3C数码</option>
+                    <option value="other">通用商品</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>价格 / 活动</span>
+                  <input name="price" placeholder="例如：到手 59 元">
+                </label>
+              </div>
+              <label class="field">
+                <span>目标人群</span>
+                <textarea name="audience" placeholder="谁会买？在什么场景下买？"></textarea>
+              </label>
+              <label class="field">
+                <span>规格 / 证明材料</span>
+                <textarea name="specs" placeholder="材质、容量、尺寸、证书、售后、包装等"></textarea>
+              </label>
+              <label class="field">
+                <span>人工卖点描述</span>
+                <textarea name="claims" placeholder="用短句列出你已经确定的卖点，用逗号分隔"></textarea>
+              </label>
+              <div class="asset-uploader">
+                <label class="file-box">
+                  <span>商品实拍原图</span>
+                  <small>拍一张商品照片上传，AI 用它生成主图、视频和详情页分屏图。</small>
+                  <input id="main-image" name="mainImage" type="file" accept="image/*">
+                </label>
+                <div id="main-image-preview" class="preview-grid single-preview"></div>
+
+                <div class="generation-targets" aria-label="AI 生成目标">
+                  <span>生成主图</span>
+                  <span>生成视频</span>
+                  <span>生成详情页分屏图</span>
+                </div>
+                <label class="field">
+                  <span>生成要求</span>
+                  <textarea name="generationBrief" placeholder="例如：保留商品真实外观，生成电商主图、场景短视频、卖点分屏图"></textarea>
+                </label>
+              </div>
+            </section>
+
+            <section class="form-section">
+              <h2>爆款参考</h2>
+              <label class="field">
+                <span>爆款视频链接</span>
+                <input name="viralLink" placeholder="粘贴公开视频链接，用于记录来源">
+              </label>
+              <label class="file-box">
+                <span>爆款视频文件</span>
+                <small>上传参考视频文件，作为视频复制的结构、节奏和镜头参考。</small>
+                <input id="viral-video" name="viralVideo" type="file" accept="video/*">
+              </label>
+              <div id="viral-video-preview" class="preview-grid single-preview"></div>
+              <label class="field">
+                <span>爆款口播 / 文案 / 观察</span>
+                <textarea name="viralText" placeholder="粘贴参考文案，或写下你观察到的爆款结构"></textarea>
+              </label>
+            </section>
+
+            <div class="actions">
+              <button class="button core-action" type="submit">
+                <i data-lucide="wand-sparkles" aria-hidden="true"></i>
+                生成方案
+              </button>
+              <button id="fill-sample" class="button secondary" type="button">
+                <i data-lucide="file-input" aria-hidden="true"></i>
+                填入样例
+              </button>
+            </div>
+          </form>
+        </aside>
+
+        <section class="workspace">
+          <div class="workspace-head">
+            <nav class="mode-tabs" aria-label="工作台页面">
+              <button class="tab-button is-active" type="button" data-tab="factory" aria-selected="true">
+                <i data-lucide="layout-dashboard" aria-hidden="true"></i>
+                内容生产
+              </button>
+              <button class="tab-button" type="button" data-tab="records" aria-selected="false">
+                <i data-lucide="history" aria-hidden="true"></i>
+                生成记录
+              </button>
+              <button class="tab-button" type="button" data-tab="engine-guide" aria-selected="false">
+                <i data-lucide="plug-zap" aria-hidden="true"></i>
+                国内模型配置
+              </button>
+            </nav>
+          </div>
+
+          <section id="factory-tab" class="tab-panel is-active" data-panel="factory">
+            <div class="tool-row">
+              <button id="copy-md" class="button ghost" type="button" disabled>
+                <i data-lucide="copy" aria-hidden="true"></i>
+                复制 Markdown
+              </button>
+              <button id="export-md" class="button ghost" type="button" disabled>
+                <i data-lucide="download" aria-hidden="true"></i>
+                导出方案
+              </button>
+              <span id="export-state" class="export-state" aria-live="polite"></span>
+              <button id="reset-demo" class="button secondary" type="button">
+                <i data-lucide="refresh-ccw" aria-hidden="true"></i>
+                清空
+              </button>
+            </div>
+
+            <div id="output">
+              <div class="empty-state">
+                <div class="empty-icon"><i data-lucide="boxes" aria-hidden="true"></i></div>
+                <h2>生成后直接预览主图、介绍视频和分屏详情页</h2>
+                <p>右侧会优先展示三类交付物预览，再提供脚本、卖点和发布检查。</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="records-tab" class="tab-panel" data-panel="records" aria-label="每次生成记录">
+            <div class="section-title compact">
+              <p>生成记录</p>
+              <h2>每次生成都会自动保存，方便回看和复用</h2>
+            </div>
+            <div class="record-toolbar">
+              <div id="record-summary" class="record-summary">还没有生成记录</div>
+              <button id="refresh-records" class="button secondary" type="button">
+                <i data-lucide="refresh-cw" aria-hidden="true"></i>
+                刷新记录
+              </button>
+            </div>
+            <div id="record-list" class="record-list">
+              <div class="empty-state compact-empty">
+                <div class="empty-icon"><i data-lucide="database" aria-hidden="true"></i></div>
+                <h2>暂无生成记录</h2>
+                <p>在左侧填入商品资料并生成方案后，这里会出现商品、时间、风险和视频数量摘要。</p>
+              </div>
+            </div>
+          </section>
+
+          <section id="engine-tab" class="tab-panel" data-panel="engine-guide" aria-label="国内模型接入配置">
+            <div class="engine-layout">
+              <section class="engine-main">
+                <div class="section-title compact">
+                  <p>国内模型配置</p>
+                  <h2>接入国内图文和视频模型，生成真实素材</h2>
+                </div>
+                <div class="guide-steps">
+                  <article class="guide-step is-current">
+                    <span>第 1 步</span>
+                    <h3>选择国内模型服务商</h3>
+                    <p>按团队已有账号选择火山、阿里云、百度、腾讯、智谱或自有网关。</p>
+                  </article>
+                  <article class="guide-step">
+                    <span>第 2 步</span>
+                    <h3>配置图文生成模型</h3>
+                    <p>用于商品主图、详情页分屏图和文案生成，重点看图片编辑能力。</p>
+                  </article>
+                  <article class="guide-step">
+                    <span>第 3 步</span>
+                    <h3>配置视频生成模型</h3>
+                    <p>用于把商品原图和爆款结构转成介绍视频、镜头序列和字幕。</p>
+                  </article>
+                  <article class="guide-step">
+                    <span>第 4 步</span>
+                    <h3>后端安全保存 Key</h3>
+                    <p>页面只保存配置草案，不保存密钥；正式版由后端托管密钥和调用日志。</p>
+                  </article>
+                </div>
+
+                <div class="contract-grid beginner-grid">
+                  <article class="result-card">
+                    <div class="card-head">
+                      <h3>接入后会变好什么</h3>
+                      <span>收益</span>
+                    </div>
+                    <ul>
+                      <li>能基于商品原图生成真实主图和详情页分屏图。</li>
+                      <li>能把爆款视频链接或文件拆成镜头、字幕和节奏。</li>
+                      <li>能进一步生成介绍视频草稿，减少人工拍摄和剪辑成本。</li>
+                    </ul>
+                  </article>
+                  <article class="result-card">
+                    <div class="card-head">
+                      <h3>推荐国内能力组合</h3>
+                      <span>配置</span>
+                    </div>
+                    <ul>
+                      <li>文案和结构：通义千问、豆包、文心、混元、智谱。</li>
+                      <li>图片生成和编辑：通义万相、即梦、百度图像、腾讯图像。</li>
+                      <li>视频生成：即梦/火山、可灵、通义视频或自有视频服务。</li>
+                    </ul>
+                  </article>
+                </div>
+              </section>
+
+              <aside class="engine-config">
+                <form id="engine-form" class="config-form">
+                  <div class="section-title compact">
+                    <p>国内配置</p>
+                    <h2>模型接入参数</h2>
+                  </div>
+                  <label class="field">
+                    <span>国内服务商</span>
+                    <select name="provider">
+                      <option value="volcengine">火山 / 即梦 / 视频服务</option>
+                      <option value="aliyun">阿里云 / 通义 / Aidge</option>
+                      <option value="baidu">百度千帆 / 文心 / 图像服务</option>
+                      <option value="tencent">腾讯混元 / 图像服务</option>
+                      <option value="zhipu">智谱 / 多模态服务</option>
+                      <option value="custom-cn">自有国内模型网关</option>
+                    </select>
+                    <small>只保留国内模型配置，按实际采购账号选择。</small>
+                  </label>
+                  <label class="field">
+                    <span>接口地址</span>
+                    <input name="baseUrl" placeholder="例如：https://api.example.com/v1">
+                    <small>这是模型服务入口，一般在服务商控制台里能看到。</small>
+                  </label>
+                  <label class="field">
+                    <span>图文模型名称</span>
+                    <input name="model" placeholder="例如：doubao-vision-pro / qwen-vl / ernie-vision">
+                    <small>用于商品主图、详情页分屏图、卖点文案和视觉理解。</small>
+                  </label>
+                  <label class="field">
+                    <span>视频模型名称</span>
+                    <input name="videoModel" placeholder="例如：jimeng-video / kling / wanx-video">
+                    <small>用于介绍视频、爆款复刻镜头和成片草稿。</small>
+                  </label>
+                  <label class="field">
+                    <span>API Key</span>
+                    <input name="apiKey" type="password" placeholder="仅用于页面配置草案，不会自动外发">
+                    <small>当前页面不会保存 Key；正式版应交给后端安全保存。</small>
+                  </label>
+                  <label class="field">
+                    <span>单次生成预算</span>
+                    <input name="budget" placeholder="例如：30 秒；单 SKU 2 元内">
+                    <small>用于提醒运营控制成本，后续可接入实际费用统计。</small>
+                  </label>
+                  <div class="button-row">
+                    <button id="save-engine" class="button" type="submit">
+                      <i data-lucide="save" aria-hidden="true"></i>
+                      保存草案
+                    </button>
+                    <button id="test-engine" class="button secondary" type="button">
+                      <i data-lucide="activity" aria-hidden="true"></i>
+                      模拟检测
+                    </button>
+                  </div>
+                </form>
+                <div id="engine-status" class="engine-status">
+                  <h3>接入状态</h3>
+                  <p>等待填写国内模型服务商、接口地址、模型名称和预算。</p>
+                </div>
+              </aside>
+            </div>
+          </section>
+        </section>
+      </div>
+    </main>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

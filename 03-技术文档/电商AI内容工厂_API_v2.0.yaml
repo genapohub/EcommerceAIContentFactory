@@ -1,0 +1,311 @@
+openapi: 3.0.3
+info:
+  title: 电商AI内容工厂
+  version: 2.0.0
+servers:
+  - url: http://127.0.0.1:5188
+security:
+  - SessionToken: []
+paths:
+  /healthz:
+    get:
+      security: []
+      responses:
+        '200': {description: 服务状态}
+  /api/v1/session:
+    get:
+      security: []
+      responses:
+        '200': {description: 本机同源会话令牌}
+  /api/v1/projects:
+    get:
+      responses:
+        '200': {description: 项目列表}
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fields: {$ref: '#/components/schemas/ProjectFields'}
+      responses:
+        '201': {description: 新项目}
+  /api/v1/projects/{id}:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      responses:
+        '200': {description: 项目和素材及任务}
+    patch:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ProjectUpdate'}
+      responses:
+        '200': {description: 更新商品资料或可编辑方案}
+  /api/v1/projects/{id}/assets:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    post:
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [file, kind]
+              properties:
+                file: {type: string, format: binary, description: 实际文件校验，最大100MB}
+                kind: {type: string, enum: [product, reference]}
+      responses:
+        '201': {description: 已验证并保存上传素材}
+  /api/v1/projects/{id}/reference:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [url]
+              properties:
+                url: {type: string, format: uri, maxLength: 2000}
+      responses:
+        '201': {description: 已解析并缓存参考视频链接}
+  /api/v1/config:
+    get:
+      responses:
+        '200': {description: 配置及密钥是否已设置，不返回密钥}
+    put:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/ConfigInput'}
+      responses:
+        '200': {description: 保存非敏感配置及内存密钥}
+  /api/v1/config/check:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [provider]
+              properties:
+                provider: {type: string, enum: [wan, vidu]}
+      responses:
+        '200': {description: 配置检查与供应商读取接口验证}
+  /api/v1/quotes:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/QuoteRequest'}
+      responses:
+        '200': {description: 生成费用预估与必要输入检查}
+  /api/v1/jobs:
+    get:
+      responses:
+        '200': {description: 任务记录}
+    post:
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: true
+          schema: {type: string, minLength: 10, maxLength: 99}
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {$ref: '#/components/schemas/Submission'}
+      responses:
+        '202': {description: 幂等排队任务}
+  /api/v1/jobs/{id}/retry:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                acknowledgeCharge: {type: boolean, default: false}
+      responses:
+        '202': {description: 失败任务新尝试或继续查询未决任务}
+  /api/v1/jobs/{id}/apply:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    post:
+      description: 显式应用分析结果；保留已锁定的卖点。不会在分析完成时自动覆盖编辑内容。
+      responses:
+        '200': {description: 更新后的项目详情}
+  /api/v1/assets/{id}:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      security: []
+      parameters:
+        - name: download
+          in: query
+          schema: {type: string, enum: ['1']}
+        - name: poster
+          in: query
+          schema: {type: string, enum: ['1']}
+      responses:
+        '200': {description: 图片或支持Range的视频文件}
+  /api/v1/projects/{id}/export:
+    parameters:
+      - {$ref: '#/components/parameters/Id'}
+    get:
+      parameters:
+        - name: format
+          in: query
+          schema: {type: string, enum: [markdown, csv, zip, long-image], default: zip}
+      responses:
+        '200': {description: Markdown或CSV或媒体ZIP导出}
+components:
+  securitySchemes:
+    SessionToken:
+      type: apiKey
+      in: header
+      name: X-Factory-Token
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: {type: string, format: uuid}
+  schemas:
+    ProjectFields:
+      type: object
+      description: 所有字段可省略，默认空字符串
+      properties:
+        name: {type: string, maxLength: 100}
+        category: {type: string, maxLength: 40}
+        price: {type: string, maxLength: 100}
+        audience: {type: string, maxLength: 400}
+        specs: {type: string, maxLength: 2000}
+        claims: {type: string, maxLength: 2000}
+        brief: {type: string, maxLength: 1500}
+        referenceUrl: {type: string, maxLength: 2000}
+        referenceText: {type: string, maxLength: 3000}
+    Point:
+      type: object
+      properties:
+        id: {type: string, maxLength: 50}
+        title: {type: string, maxLength: 80}
+        proof: {type: string, maxLength: 500}
+        locked: {type: boolean, default: false}
+    Screen:
+      type: object
+      properties:
+        id: {type: string, maxLength: 50}
+        title: {type: string, maxLength: 60}
+        copy: {type: string, maxLength: 500}
+        prompt: {type: string, maxLength: 1000}
+        pointId: {type: string, maxLength: 50}
+    Shot:
+      type: object
+      properties:
+        time: {type: string, maxLength: 40}
+        action: {type: string, maxLength: 500}
+        caption: {type: string, maxLength: 160}
+    VideoPlan:
+      type: object
+      properties:
+        id: {type: string, maxLength: 50}
+        title: {type: string, maxLength: 80}
+        hook: {type: string, maxLength: 200}
+        voiceover: {type: string, maxLength: 1500}
+        shots: {type: array, maxItems: 12, items: {$ref: '#/components/schemas/Shot'}}
+        cta: {type: string, maxLength: 200}
+    Plan:
+      type: object
+      required: [points, screens, videos]
+      properties:
+        source: {type: string, enum: [draft, ai]}
+        points: {type: array, maxItems: 12, items: {$ref: '#/components/schemas/Point'}}
+        screens: {type: array, minItems: 1, maxItems: 8, items: {$ref: '#/components/schemas/Screen'}}
+        videos: {type: array, maxItems: 3, items: {$ref: '#/components/schemas/VideoPlan'}}
+        reference:
+          type: object
+          properties:
+            source: {type: string, enum: [unread, ai]}
+            hook: {type: string, maxLength: 300}
+            pain: {type: string, maxLength: 500}
+            proof: {type: string, maxLength: 500}
+            cta: {type: string, maxLength: 300}
+            shots: {type: array, maxItems: 30, items: {$ref: '#/components/schemas/Shot'}}
+    ProjectUpdate:
+      type: object
+      properties:
+        fields: {$ref: '#/components/schemas/ProjectFields'}
+        imageId: {type: string, format: uuid, nullable: true}
+        referenceId: {type: string, format: uuid, nullable: true}
+        plan: {$ref: '#/components/schemas/Plan'}
+    TaskInput:
+      type: object
+      required: [kind]
+      properties:
+        kind: {type: string, enum: [main_image, text_image, detail_image, intro_video, replica_video, product_analysis, reference_analysis, layout]}
+        index: {type: integer, minimum: 0, maximum: 7, default: 0}
+        prompt: {type: string, maxLength: 1800, default: ''}
+        duration: {type: integer, minimum: 2, maximum: 15, default: 10}
+        audio: {type: boolean, default: true}
+    QuoteRequest:
+      type: object
+      required: [projectId, tasks]
+      properties:
+        projectId: {type: string, format: uuid}
+        tasks: {type: array, minItems: 1, maxItems: 16, items: {$ref: '#/components/schemas/TaskInput'}}
+    Submission:
+      allOf:
+        - {$ref: '#/components/schemas/QuoteRequest'}
+        - type: object
+          required: [quoteHash]
+          properties:
+            quoteHash: {type: string, description: 报价接口返回的hash，资料或预算变化后失效}
+    ConfigInput:
+      type: object
+      properties:
+        wanKey: {type: string, maxLength: 500, writeOnly: true}
+        viduKey: {type: string, maxLength: 500, writeOnly: true}
+        clearWan: {type: boolean}
+        clearVidu: {type: boolean}
+        workspaceId: {type: string, pattern: '^[a-zA-Z0-9-]*$', maxLength: 80}
+        visionModel: {type: string, enum: [qwen3-vl-plus, qwen3-vl-flash]}
+        maxTaskYuan: {type: number, minimum: 1, maximum: 1000}
+        viduSecondYuan: {type: number, minimum: 0.01, maximum: 20}
+        viduBillingConfirmed: {type: boolean}
+    Job:
+      type: object
+      properties:
+        id: {type: string, format: uuid}
+        projectId: {type: string, format: uuid}
+        label: {type: string}
+        kind: {type: string}
+        provider: {type: string, enum: [wan, vidu]}
+        status: {type: string, enum: [queued, running, succeeded, failed, needs_review]}
+        stage: {type: string, enum: [preparing, submitting, polling, saving, done]}
+        estimate: {type: number, nullable: true}
+        upstreamId: {type: string}
+        requestId: {type: string}
+        outputIds: {type: array, items: {type: string, format: uuid}}
+        error: {type: string}
+        errorCode: {type: string}
+        createdAt: {type: string, format: date-time}
+        finishedAt: {type: string, format: date-time}
+    Error:
+      type: object
+      required: [message, code]
+      properties:
+        message: {type: string}
+        code: {type: string}

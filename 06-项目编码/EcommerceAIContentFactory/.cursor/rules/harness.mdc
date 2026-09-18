@@ -1,0 +1,16 @@
+---
+description: Harness project governance
+alwaysApply: true
+---
+
+开工前先读项目根目录 `AGENTS.md`、`project-tracker.md`、`SECURITY.md`、`.ai/SKILLS.md` 和 `.ai/skills-manifest.json`。
+
+如果 `skills/*/SKILL.md` 不存在或数量不足，先提示按 `.ai/SKILLS.md` 中的 `git clone` 命令拉取本项目启用的角色技能。
+
+必须遵守：
+
+1. 未确认需求前不改代码。
+2. 不直接 push main / master。
+3. 不读取或修改 `.env`、credentials、secrets。
+4. 不执行破坏性命令。
+5. 收工前更新 `project-tracker.md`，并说明验证结果。

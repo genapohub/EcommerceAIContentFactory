@@ -1,0 +1,5 @@
+allowBuilds:
+  sharp: true
+  ffmpeg-static: true
+minimumReleaseAgeExclude:
+  - file-type@22.1.1

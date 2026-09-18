@@ -1,0 +1,19 @@
+{
+  "PROJECT_NAME": "your-project",
+  "PROJECT_GOAL": "一句话说明项目解决什么问题",
+  "TARGET_USERS": "目标用户",
+  "TECH_STACK": "前端 / 后端 / 数据库 / 部署",
+  "REPOSITORY_URL": "git@github.com:your-org/your-project.git",
+  "MAIN_BRANCH": "main",
+  "DEV_BRANCH": "develop",
+  "CURRENT_STAGE": "MVP",
+  "AI_TRIGGER_SCOPE": "所有改动",
+  "OWNER_NAME": "项目负责人",
+  "CREATED_DATE": "YYYY-MM-DD",
+  "UPDATED_DATE": "YYYY-MM-DD",
+  "BUSINESS_DOC": "docs/product/PRD.md",
+  "API_DOC": "docs/tech/API.md",
+  "DATA_MODEL_DOC": "docs/tech/ERD.md",
+  "DESIGN_DOC": "docs/design/UI.md",
+  "DEPLOY_DOC": "docs/ops/deploy.md"
+}

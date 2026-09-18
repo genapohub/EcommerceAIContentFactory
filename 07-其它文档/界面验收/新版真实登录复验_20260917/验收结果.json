@@ -1,0 +1,75 @@
+{
+  "startedAt": "2026-09-17T08:12:51.769Z",
+  "result": "新版真实授权后的UI检查通过",
+  "mode": "隔离真实登录",
+  "browser": "chrome",
+  "widths": [
+    375,
+    1440
+  ],
+  "authorized": true,
+  "checks": [
+    {
+      "label": "授权页 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 375",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "授权页 1440",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型页 1440",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "模型弹窗 1440",
+      "passed": true,
+      "issues": []
+    },
+    {
+      "label": "生产页 1440",
+      "passed": true,
+      "issues": []
+    }
+  ],
+  "screenshots": [
+    "授权页_登录前_1440.png",
+    "授权页_真实已登录_375.png",
+    "模型页_375.png",
+    "模型弹窗_375.png",
+    "生产页_375.png",
+    "授权页_真实已登录_1440.png",
+    "模型页_1440.png",
+    "模型弹窗_1440.png",
+    "生产页_1440.png"
+  ],
+  "pageErrors": [],
+  "httpErrors": [],
+  "source": "C:\\Users\\OPC\\Downloads\\WorkSpace\\电商AI内容工厂\\06-项目编码\\EcommerceAIContentFactory",
+  "isolatedDataDirectory": "C:\\Users\\OPC\\AppData\\Local\\Temp\\电商UI授权验收-NzwWEX",
+  "url": "http://127.0.0.1:53453",
+  "initialState": {
+    "authorized": false,
+    "configured": true,
+    "legacy": false
+  },
+  "finishedAt": "2026-09-17T08:12:58.050Z"
+}
