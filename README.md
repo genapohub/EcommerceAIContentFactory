@@ -1,2 +1,1 @@
-# EcommerceAIContentFactory
-# EcommerceAIContentFactory
+# 电商商品详情素材生图，爆款短视频复刻
